@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   String selectedPrice = '';
   String selectedMileage = '';
 
+  // Checking if the user has choosen all the car Specifications
   bool checkDropdownFilled() {
     bool statu = false;
     setState(() {
@@ -36,7 +37,6 @@ class _HomePageState extends State<HomePage> {
         statu = true;
       }
     });
-    print(statu);
     return statu;
   }
 
@@ -88,7 +88,9 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.symmetric(horizontal: 40, vertical: 7),
               color: Colors.blue,
               onPressed: checkDropdownFilled()
-                  ? () {
+                  ? // If the check passes, enable the button
+                  () {
+                      // If the button is clicked, navigate to the AdsPage and pass the car specifications to its constructor
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => AdsPage(
                               carManufacturer: selectedManufacturer,
@@ -96,7 +98,8 @@ class _HomePageState extends State<HomePage> {
                               carMileage: selectedMileage)));
                       ;
                     }
-                  : null,
+                  : // If the check fails, keep the button disabled
+                  null,
               disabledColor: Colors.blue[200],
               child: Text(
                 "Search",
@@ -144,10 +147,13 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
               value: dropdownValue,
               onChanged: (newValue) {
                 setState(() {
+                  // Get the chosen value
                   dropdownValue = newValue;
+                  // Pass the chosen value to the onChnaged callback
                   widget.onChnaged(newValue!);
                 });
               },
+              // Create a DropdownMenuItem for each item in itemList
               items: widget.itemList.map((valueItem) {
                 return DropdownMenuItem<String>(
                   value: valueItem,
